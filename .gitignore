@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# MyPersonal
+/src/main/resources/application.properties
+.gigaide/
