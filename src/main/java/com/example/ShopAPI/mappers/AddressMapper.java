@@ -1,4 +1,4 @@
-package com.example.ShopAPI.DTOs.mappers;
+package com.example.ShopAPI.mappers;
 
 import com.example.ShopAPI.DTOs.AddressDto;
 import com.example.ShopAPI.models.Address;

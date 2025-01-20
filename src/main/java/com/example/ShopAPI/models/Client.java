@@ -31,7 +31,14 @@ public class Client {
     private LocalDate registrationDate;
 //    @Column(name = "address_id", nullable = false)
 //    private UUID addressId;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
-    private Address addressId;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+//    @org.hibernate.validator.constraints.UUID
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address address;
+
+    public UUID getAddressId() {
+        return address != null ? address.getId() : null;
+    }
 }

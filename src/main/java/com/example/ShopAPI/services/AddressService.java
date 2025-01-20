@@ -1,6 +1,6 @@
 package com.example.ShopAPI.services;
 
-import com.example.ShopAPI.DTOs.mappers.AddressMapper;
+import com.example.ShopAPI.mappers.AddressMapper;
 import com.example.ShopAPI.repositories.AddressRepository;
 import org.springframework.stereotype.Service;
 

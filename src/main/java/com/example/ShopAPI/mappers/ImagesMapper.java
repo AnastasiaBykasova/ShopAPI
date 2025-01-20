@@ -1,4 +1,4 @@
-package com.example.ShopAPI.DTOs.mappers;
+package com.example.ShopAPI.mappers;
 import com.example.ShopAPI.DTOs.ImagesDto;
 import com.example.ShopAPI.models.Images;
 import org.mapstruct.Mapper;
