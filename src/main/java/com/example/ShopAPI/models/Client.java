@@ -29,11 +29,6 @@ public class Client {
     private Gender gender;
     @Column(name = "registration_date", nullable = false, columnDefinition = "date")
     private LocalDate registrationDate;
-//    @Column(name = "address_id", nullable = false)
-//    private UUID addressId;
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
-//    @org.hibernate.validator.constraints.UUID
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
