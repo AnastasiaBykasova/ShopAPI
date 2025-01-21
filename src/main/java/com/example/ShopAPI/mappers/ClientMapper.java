@@ -10,7 +10,7 @@ import com.example.ShopAPI.DTOs.ClientResponseDto;
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
 
-    @Mapping(source = "address.id", target = "addressId")
+//    @Mapping(source = "address.id", target = "addressId")
     ClientResponseDto clientToClientResponseDto(Client client);
 
     @Mapping(source = "addressId", target = "address.id")

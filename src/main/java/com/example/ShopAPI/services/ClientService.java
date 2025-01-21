@@ -11,7 +11,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -42,5 +44,12 @@ public class ClientService {
     public void deleteClient(UUID id) {
         Client client = clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
         clientRepository.delete(client);
+    }
+
+    public List<ClientResponseDto> getClientsByNameAndSurname(String clientName, String clientSurname) {
+        List<Client> clients = clientRepository.findByClientNameAndClientSurname(clientName, clientSurname);
+        return clients.stream()
+                .map(clientMapper::clientToClientResponseDto)
+                .collect(Collectors.toList());
     }
 }

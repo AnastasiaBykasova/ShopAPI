@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,6 +33,12 @@ public class ClientController {
     public ResponseEntity<Void> deleteClient(@PathVariable UUID id) {
         clientService.deleteClient(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ClientResponseDto>> getClientsByNameAndSurname(@RequestParam String clientName, @RequestParam String clientSurname) {
+        List<ClientResponseDto> clients = clientService.getClientsByNameAndSurname(clientName, clientSurname);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 }
 
