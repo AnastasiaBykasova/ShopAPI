@@ -9,9 +9,13 @@ import com.example.ShopAPI.repositories.AddressRepository;
 import com.example.ShopAPI.repositories.ClientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -52,4 +56,19 @@ public class ClientService {
                 .map(clientMapper::clientToClientResponseDto)
                 .collect(Collectors.toList());
     }
+
+    public List<ClientResponseDto> getAllClients(Optional<Integer> limit, Optional<Integer> offset) {
+        int page = offset.orElse(0);
+        int pageSize = limit.orElse(10);
+
+        if (limit.isPresent() || offset.isPresent()) {
+            Pageable pageable = PageRequest.of(page, pageSize);
+            Page<Client> clientPage = clientRepository.findAll(pageable);
+            return clientMapper.toDtoList(clientPage.getContent());
+        }
+        else {
+            return clientMapper.toDtoList(clientRepository.findAll());
+        }
+    }
+
 }

@@ -7,6 +7,8 @@ import org.mapstruct.Mapping;
 import com.example.ShopAPI.DTOs.ClientRequestDto;
 import com.example.ShopAPI.DTOs.ClientResponseDto;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
 
@@ -15,4 +17,6 @@ public interface ClientMapper {
 
     @Mapping(source = "addressId", target = "address.id")
     Client clientRequestDtoToClient(ClientRequestDto clientRequestDTO);
+
+    List<ClientResponseDto> toDtoList(List<Client> clients);
 }

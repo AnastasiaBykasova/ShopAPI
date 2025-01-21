@@ -71,6 +71,8 @@
   - `POST /`: для создания клиента (`@RequestBody`,  `@Valid`).
   - `GET /{id}`: для получения клиента по ID (`@PathVariable`).
   - `GET /`: для получения всех клиентов с пагинацией (`@RequestParam` для limit и offset).
+    - page: Номер страницы, начиная с 0. Первая страница — 0, вторая — 1, и т. д.
+    - limit: Количество элементов на странице.
   - `GET /search`: для получения клиентов по имени и фамилии (`@RequestParam` firstName и lastName).
   - `PUT /{id}`: для обновления клиента (`@PathVariable`, `@RequestBody`, `@Valid`).
   - `PATCH /{id}`: для частичного обновления (`@PathVariable`, `@RequestBody`, `@Valid`).

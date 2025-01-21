@@ -12,6 +12,5 @@ import java.util.UUID;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, UUID> {
     List<Client> findByClientNameAndClientSurname(String name, String surname);
-    @Override
     Page<Client> findAll(Pageable pageable);
 }

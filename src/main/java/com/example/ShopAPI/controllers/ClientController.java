@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -35,10 +36,17 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity<List<ClientResponseDto>> getClientsByNameAndSurname(@RequestParam String clientName, @RequestParam String clientSurname) {
         List<ClientResponseDto> clients = clientService.getClientsByNameAndSurname(clientName, clientSurname);
         return new ResponseEntity<>(clients, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ClientResponseDto>> getAllClients(@RequestParam(name = "limit", required = false) Optional<Integer> limit,
+                                                                 @RequestParam(name = "offset", required = false) Optional<Integer> offset) {
+        List<ClientResponseDto> clients = clientService.getAllClients(limit, offset);
+        return ResponseEntity.ok(clients);
     }
 }
 
