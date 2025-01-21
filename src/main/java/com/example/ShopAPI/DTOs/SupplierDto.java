@@ -10,6 +10,7 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 public class SupplierDto {
+    @NotNull
     private UUID id;
     @NotBlank
     private String supplierName;

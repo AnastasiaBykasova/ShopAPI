@@ -8,7 +8,8 @@ import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class ImagesDto {
+public class ImageDto {
+    @NotNull
     private UUID id;
     @NotNull
     private byte[] image;

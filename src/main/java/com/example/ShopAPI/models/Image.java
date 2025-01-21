@@ -9,8 +9,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "Images")
-public class Images {
+@Table(name = "Image")
+public class Image {
     @Id
     @Column(name = "id", columnDefinition = "uuid default uuid_generate_v4()")
     private UUID id;

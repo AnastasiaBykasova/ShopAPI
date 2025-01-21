@@ -34,11 +34,11 @@ public class ClientService {
         this.clientMapper = clientMapper;
     }
 
-    public ClientResponseDto createClient(ClientRequestDto clientRequestDTO) {
-        Client client = clientMapper.clientRequestDtoToClient(clientRequestDTO);
+    public ClientResponseDto createClient(ClientRequestDto clientRequestDto) {
+        Client client = clientMapper.clientRequestDtoToClient(clientRequestDto);
 
-        Address address = addressRepository.findById(clientRequestDTO.getAddressId())
-                .orElseThrow(() -> new IllegalArgumentException("Address not found with id: " + clientRequestDTO.getAddressId()));
+        Address address = addressRepository.findById(clientRequestDto.getAddressId())
+                .orElseThrow(() -> new IllegalArgumentException("Address not found with id: " + clientRequestDto.getAddressId()));
 
         client.setAddress(address); // связанный объект Address
         Client savedClient = clientRepository.save(client);
