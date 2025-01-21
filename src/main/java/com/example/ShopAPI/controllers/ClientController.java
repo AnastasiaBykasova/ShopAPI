@@ -1,7 +1,11 @@
 package com.example.ShopAPI.controllers;
 
+import com.example.ShopAPI.DTOs.AddressDto;
 import com.example.ShopAPI.DTOs.ClientRequestDto;
 import com.example.ShopAPI.DTOs.ClientResponseDto;
+import com.example.ShopAPI.DTOs.ClientUpdateAddressDTO;
+import com.example.ShopAPI.models.Address;
+import com.example.ShopAPI.models.Client;
 import com.example.ShopAPI.services.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,6 +52,12 @@ public class ClientController {
                                                                  @RequestParam(name = "offset", required = false) Optional<Integer> offset) {
         List<ClientResponseDto> clients = clientService.getAllClients(limit, offset);
         return ResponseEntity.ok(clients);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ClientResponseDto> updateClientAddress(@PathVariable UUID id, @RequestBody ClientUpdateAddressDTO updateAddressDTO) {
+        ClientResponseDto updatedClient = clientService.updateClientAddress(id, updateAddressDTO);
+        return ResponseEntity.ok(updatedClient);
     }
 }
 
