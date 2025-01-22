@@ -30,8 +30,8 @@ public class ProductRequestDto {
     @Schema(description = "Last update date", example = "2025-01-01")
     private LocalDate lastUpdateDate;
     @NotNull
-    @Schema(description = "Supplier ID", example = "28b728be-f657-4180-8534-5eb1060e1d3w")
+    @Schema(description = "Supplier ID", example = "123e4567-e89b-12d3-a456-556642440000")
     private UUID supplierId;
-    @Schema(description = "Image ID", example = "28b728be-f657-4180-8534-5eb1060e1d3w", nullable = true)
+    @Schema(description = "Image ID", example = "123e4567-e89b-12d3-a456-556642440000", nullable = true)
     private UUID imageId;
 }

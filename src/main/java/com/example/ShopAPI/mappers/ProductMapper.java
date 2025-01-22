@@ -12,6 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
     ProductResponseDto productToProductResponseDto(Product product);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "image", ignore = true)
     @Mapping(target = "supplier", ignore = true)

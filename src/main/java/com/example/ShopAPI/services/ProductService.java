@@ -34,12 +34,12 @@ public class ProductService {
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
         Product product = productMapper.productRequestDtoToProduct(productRequestDto);
         Supplier supplier = supplierRepository.findById(productRequestDto.getSupplierId())
-                .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + productRequestDto.getSupplierId()));
+                .orElseThrow(() -> new EntityNotFoundException("Supplier not found with id: " + productRequestDto.getSupplierId()));
         product.setSupplierId(supplier.getId());
 
         if (productRequestDto.getImageId() != null) {
             Image image = imageRepository.findById(productRequestDto.getImageId())
-                    .orElseThrow(() -> new RuntimeException("Image not found with id: " + productRequestDto.getImageId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Image not found with id: " + productRequestDto.getImageId()));
             product.setImage(image);
         }
 
@@ -49,7 +49,7 @@ public class ProductService {
 
     @Transactional
     public ProductResponseDto reduceProductStock(UUID id, ProductStockUpdateRequestDto updateRequestDto) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
         int current = product.getAvailableStock();
         int toReduce = updateRequestDto.getToReduce();
         if (current < toReduce) {
@@ -79,9 +79,14 @@ public class ProductService {
         }
     }
 
+    @Transactional
     public void deleteProduct(UUID id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
         productRepository.delete(product);
+    }
+
+    public boolean exists(UUID id){
+        return productRepository.existsById(id);
     }
 
 }

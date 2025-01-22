@@ -12,10 +12,10 @@ import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-@Schema(description = "DTO for product creation request")
+@Schema(description = "DTO for rroduct creation response")
 public class ProductResponseDto {
     @NotNull
-    @Schema(description = "Product ID", example = "28b728be-f657-4180-8534-5eb1060e1d3w")
+    @Schema(description = "Product id", example = "123e4567-e89b-12d3-a456-556642440000")
     private UUID id;
     @NotBlank
     @Schema(description = "Product name", example = "ASUS TUF Gaming F15 FX507ZC4-HN252")
@@ -38,4 +38,3 @@ public class ProductResponseDto {
     @Schema(description = "Image ID", example = "28b728be-f657-4180-8534-5eb1060e1d3w", nullable = true)
     private UUID imageId;
 }
-

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,11 +34,12 @@ public class ClientService {
         this.clientMapper = clientMapper;
     }
 
+    @Transactional
     public ClientResponseDto createClient(ClientRequestDto clientRequestDto) {
         Client client = clientMapper.clientRequestDtoToClient(clientRequestDto);
 
         Address address = addressRepository.findById(clientRequestDto.getAddressId())
-                .orElseThrow(() -> new IllegalArgumentException("Address not found with id: " + clientRequestDto.getAddressId()));
+                .orElseThrow(() -> new EntityNotFoundException("Address not found with id: " + clientRequestDto.getAddressId()));
 
         client.setAddress(address); // связанный объект Address
         Client savedClient = clientRepository.save(client);
@@ -45,6 +47,7 @@ public class ClientService {
         return clientMapper.clientToClientResponseDto(savedClient);
     }
 
+    @Transactional
     public void deleteClient(UUID id) {
         Client client = clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
         clientRepository.delete(client);
@@ -71,12 +74,17 @@ public class ClientService {
         }
     }
 
+    @Transactional
     public ClientResponseDto updateClientAddress(UUID id, AddressUpdateDTO updateAddressDTO) {
-        Client client = clientRepository.findById(id).orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
+        Client client = clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
         Address newAddress = addressRepository.findById(updateAddressDTO.getAddressId()).orElseThrow(() -> new RuntimeException("Address not found with id: " + updateAddressDTO.getAddressId()));
         client.setAddress(newAddress);
         Client updatedClient = clientRepository.save(client);
         return clientMapper.clientToClientResponseDto(updatedClient);
+    }
+
+    public boolean exists(UUID id){
+        return clientRepository.existsById(id);
     }
 
 }

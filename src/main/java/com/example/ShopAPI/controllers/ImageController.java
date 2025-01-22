@@ -3,9 +3,6 @@ package com.example.ShopAPI.controllers;
 import com.example.ShopAPI.DTOs.ImageRequestDto;
 import com.example.ShopAPI.DTOs.ImageResponseDto;
 import com.example.ShopAPI.DTOs.ImageUpdateRequestDto;
-import com.example.ShopAPI.configs.NotFoundException;
-import com.example.ShopAPI.models.Image;
-import com.example.ShopAPI.repositories.ImageRepository;
 import com.example.ShopAPI.services.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,12 +17,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/images")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/images")
 @Tag(name = "Images", description = "Endpoints for managing product images")
 public class ImageController {
     private final ImageService imageService;
@@ -60,8 +56,7 @@ public class ImageController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete an image", description = "Deletes an image by its ID",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Image is deleted successfully",
-                            content = @Content(schema = @Schema(implementation = ImageResponseDto.class))),
+                    @ApiResponse(responseCode = "200", description = "Image is deleted successfully"),
                     @ApiResponse(responseCode = "400", description = "Invalid input provided", content = @Content),
                     @ApiResponse(responseCode = "404", description = "Image not found", content = @Content)
             })
@@ -97,7 +92,7 @@ public class ImageController {
             httpHeaders.setContentDispositionFormData("attachment", "image.octet-stream");
             return new ResponseEntity<>(image, httpHeaders, HttpStatus.OK);
         }
-        catch (NotFoundException e) {
+        catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage().getBytes(), HttpStatus.NOT_FOUND);
         }
     }

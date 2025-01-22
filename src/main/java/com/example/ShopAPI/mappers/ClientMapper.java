@@ -11,8 +11,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
-
-//    @Mapping(source = "address.id", target = "addressId")
     ClientResponseDto clientToClientResponseDto(Client client);
 
     @Mapping(source = "addressId", target = "address.id")

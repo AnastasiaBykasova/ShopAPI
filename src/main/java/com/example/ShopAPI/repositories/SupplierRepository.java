@@ -13,6 +13,4 @@ import java.util.UUID;
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, UUID> {
     Page<Supplier> findAll(Pageable pageable);
-
-//    Supplier findById(UUID id);
 }

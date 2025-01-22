@@ -11,10 +11,10 @@ import java.util.UUID;
 @Getter
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Schema(description = "DTO for adding an image to a product")
+@Schema(description = "DTO for image creation request")
 public class ImageRequestDto {
     @NotNull
-    @Schema(description = "Product ID", example = "123e4567-e89b-12d3-a456-556642440000")
+    @Schema(description = "Product id", example = "123e4567-e89b-12d3-a456-556642440000")
     private UUID productId;
     @NotNull
     @Schema(description = "Image data in byte array", example = "base64encodedimage")
