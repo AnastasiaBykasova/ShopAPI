@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,11 +37,36 @@ public class ProductController {
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
+    @PatchMapping("/{id}")
+    @Operation(summary = "Reduce product stock", description = "Reduces the available stock of a product by the specified quantity",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Stock reduced successfully",
+                            content = @Content(schema = @Schema(implementation = ProductResponseDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Invalid input or insufficient stock", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Product not found", content = @Content)
+            })
+    public ResponseEntity<ProductResponseDto> reduceProductStock(@PathVariable("id") UUID id,
+                                                                 @Valid @RequestBody ProductStockUpdateRequestDto updateRequestDto) {
+        ProductResponseDto updatedProduct = productService.reduceProductStock(id, updateRequestDto);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+    }
 
-//    public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductRequestDto productRequestDto) {
-//        ProductResponseDto createdProduct = productService.createProduct(productRequestDto);
-//        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
-//    }
+    @GetMapping("/search")
+    public ResponseEntity<ProductResponseDto> getProductById(@RequestParam UUID id) {
+        ProductResponseDto product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductResponseDto>> getAllProducts(@RequestParam(name = "limit", required = false) Optional<Integer> limit,
+                                                                     @RequestParam(name = "offset", required = false) Optional<Integer> offset) {
+        List<ProductResponseDto> products = productService.getAllProducts(limit, offset);
+        return ResponseEntity.ok(products);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable UUID id) {
+        productService.deleteProduct(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
-
-

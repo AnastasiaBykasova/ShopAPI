@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
-
     private final ClientRepository clientRepository;
     private final AddressRepository addressRepository;
     private final ClientMapper clientMapper;
