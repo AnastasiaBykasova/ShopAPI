@@ -23,11 +23,16 @@ public class ProductService {
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
         Product product = productMapper.productRequestDtoToProduct(productRequestDto);
         Supplier supplier = supplierRepository.findById(productRequestDto.getSupplierId())
-                .orElseThrow(() -> new RuntimeException("Address not found with id: " + productRequestDto.getSupplierId()));
-        Image image = imageRepository.findById(productRequestDto.getImageId())
-                .orElseThrow(() -> new RuntimeException("Image not found with id: " + productRequestDto.getImageId()));
+                .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + productRequestDto.getSupplierId()));
         product.setSupplierId(supplier.getId());
-        product.setImageId(image.getId());
+
+        if (productRequestDto.getImageId() != null) {
+            product.setImageId(productRequestDto.getImageId());
+        }
+
+//        Image image = imageRepository.findById(productRequestDto.getImageId())
+//                .orElseThrow(() -> new RuntimeException("Image not found with id: " + productRequestDto.getImageId()));
+//        product.setImageId(image.getId());
 
         Product savedProduct = productRepository.save(product);
         return productMapper.productToProductResponseDto(savedProduct);

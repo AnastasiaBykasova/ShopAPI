@@ -41,11 +41,4 @@ public class Product {
     @Column(name = "image_id")
     private UUID imageId;
 
-//    public UUID getSupplierId() {
-//        return supplierId != null ? supplierId.getId() : null;
-//    }
-//
-//    public UUID getImageId() {
-//        return imageId != null ? imageId.getId() : null;
-//    }
 }
