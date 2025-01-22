@@ -1,5 +1,6 @@
 package com.example.ShopAPI.models;
 
+import com.example.ShopAPI.helpers.CheckAddress;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table (name = "Client")
-public class Client {
+public class Client implements CheckAddress {
     @Id
     @GeneratedValue
     @UuidGenerator
@@ -33,6 +34,7 @@ public class Client {
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
+    @Override
     public UUID getAddressId() {
         return address != null ? address.getId() : null;
     }

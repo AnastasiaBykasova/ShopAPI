@@ -1,11 +1,19 @@
 package com.example.ShopAPI.mappers;
 
-import com.example.ShopAPI.DTOs.SupplierDto;
+import com.example.ShopAPI.DTOs.*;
+import com.example.ShopAPI.models.Client;
 import com.example.ShopAPI.models.Supplier;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface SupplierMapper {
-    SupplierDto supplierToSupplierDto(Supplier supplier);
-    Supplier supplierDtoToSupplier(SupplierDto supplierDto);
+    SupplierResponseDto supplierToSupplierResponseDto(Supplier supplier);
+
+    @Mapping(source = "addressId", target = "address.id")
+    Supplier supplierRequestDtoToSupplier(SupplierRequestDto supplierRequestDTO);
+
+//    List<ClientResponseDto> toDtoList(List<Client> clients);
 }

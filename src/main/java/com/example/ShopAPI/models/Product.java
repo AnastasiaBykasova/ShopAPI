@@ -3,6 +3,7 @@ package com.example.ShopAPI.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,7 +15,9 @@ import java.util.UUID;
 @Table(name = "Product")
 public class Product {
     @Id
-    @Column(name = "id", columnDefinition = "uuid default uuid_generate_v4()")
+    @GeneratedValue
+    @UuidGenerator
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
     @Column(name = "product_name", nullable = false)
     private String productName;
@@ -26,8 +29,23 @@ public class Product {
     private int availableStock;
     @Column(name = "last_update_date", nullable = false)
     private LocalDate lastUpdateDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplier_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Supplier supplier;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Image image;
     @Column(name = "supplier_id", nullable = false)
     private UUID supplierId;
     @Column(name = "image_id")
     private UUID imageId;
+
+//    public UUID getSupplierId() {
+//        return supplierId != null ? supplierId.getId() : null;
+//    }
+//
+//    public UUID getImageId() {
+//        return imageId != null ? imageId.getId() : null;
+//    }
 }

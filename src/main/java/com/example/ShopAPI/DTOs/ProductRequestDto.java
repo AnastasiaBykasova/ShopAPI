@@ -11,8 +11,7 @@ import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class ProductDto {
-    private UUID id;
+public class ProductRequestDto {
     @NotBlank
     private String productName;
     @NotBlank
@@ -25,5 +24,6 @@ public class ProductDto {
     private LocalDate lastUpdateDate;
     @NotNull
     private UUID supplierId;
+    @NotNull
     private UUID imageId;
 }

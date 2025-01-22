@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class ClientUpdateAddressDTO {
+public class UpdateAddressDTO {
     @NotNull
     private UUID addressId;
 }

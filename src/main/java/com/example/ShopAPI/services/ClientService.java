@@ -2,7 +2,7 @@ package com.example.ShopAPI.services;
 
 import com.example.ShopAPI.DTOs.ClientRequestDto;
 import com.example.ShopAPI.DTOs.ClientResponseDto;
-import com.example.ShopAPI.DTOs.ClientUpdateAddressDTO;
+import com.example.ShopAPI.DTOs.UpdateAddressDTO;
 import com.example.ShopAPI.mappers.ClientMapper;
 import com.example.ShopAPI.models.Address;
 import com.example.ShopAPI.models.Client;
@@ -72,7 +72,7 @@ public class ClientService {
         }
     }
 
-    public ClientResponseDto updateClientAddress(UUID id, ClientUpdateAddressDTO updateAddressDTO) {
+    public ClientResponseDto updateClientAddress(UUID id, UpdateAddressDTO updateAddressDTO) {
         Client client = clientRepository.findById(id).orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
         Address newAddress = addressRepository.findById(updateAddressDTO.getAddressId()).orElseThrow(() -> new RuntimeException("Address not found with id: " + updateAddressDTO.getAddressId()));
         client.setAddress(newAddress);
