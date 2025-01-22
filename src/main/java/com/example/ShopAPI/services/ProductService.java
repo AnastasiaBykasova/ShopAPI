@@ -4,6 +4,7 @@ import com.example.ShopAPI.DTOs.ProductRequestDto;
 import com.example.ShopAPI.DTOs.ProductResponseDto;
 import com.example.ShopAPI.DTOs.ProductStockUpdateRequestDto;
 import com.example.ShopAPI.mappers.ProductMapper;
+import com.example.ShopAPI.models.Image;
 import com.example.ShopAPI.models.Product;
 import com.example.ShopAPI.models.Supplier;
 import com.example.ShopAPI.repositories.ImageRepository;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +27,10 @@ import java.util.UUID;
 public class ProductService {
     private final ProductRepository productRepository;
     private final SupplierRepository supplierRepository;
+    private final ImageRepository imageRepository;
     private final ProductMapper productMapper;
 
+    @Transactional
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
         Product product = productMapper.productRequestDtoToProduct(productRequestDto);
         Supplier supplier = supplierRepository.findById(productRequestDto.getSupplierId())
@@ -34,14 +38,17 @@ public class ProductService {
         product.setSupplierId(supplier.getId());
 
         if (productRequestDto.getImageId() != null) {
-            product.setImageId(productRequestDto.getImageId());
+            Image image = imageRepository.findById(productRequestDto.getImageId())
+                    .orElseThrow(() -> new RuntimeException("Image not found with id: " + productRequestDto.getImageId()));
+            product.setImage(image);
         }
 
         Product savedProduct = productRepository.save(product);
         return productMapper.productToProductResponseDto(savedProduct);
     }
 
-   public ProductResponseDto reduceProductStock(UUID id, ProductStockUpdateRequestDto updateRequestDto) {
+    @Transactional
+    public ProductResponseDto reduceProductStock(UUID id, ProductStockUpdateRequestDto updateRequestDto) {
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
         int current = product.getAvailableStock();
         int toReduce = updateRequestDto.getToReduce();
@@ -51,7 +58,7 @@ public class ProductService {
         product.setAvailableStock(current - toReduce);
         Product updatedProduct = productRepository.save(product);
         return productMapper.productToProductResponseDto(updatedProduct);
-   }
+    }
 
     public ProductResponseDto getProductById(UUID id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));

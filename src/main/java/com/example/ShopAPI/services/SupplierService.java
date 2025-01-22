@@ -3,32 +3,31 @@ package com.example.ShopAPI.services;
 import com.example.ShopAPI.DTOs.*;
 import com.example.ShopAPI.mappers.SupplierMapper;
 import com.example.ShopAPI.models.Address;
+import com.example.ShopAPI.models.Image;
+import com.example.ShopAPI.models.Product;
 import com.example.ShopAPI.models.Supplier;
 import com.example.ShopAPI.repositories.AddressRepository;
+import com.example.ShopAPI.repositories.ProductRepository;
 import com.example.ShopAPI.repositories.SupplierRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class SupplierService {
     private final SupplierRepository supplierRepository;
     private final AddressRepository addressRepository;
+    private final ProductRepository productRepository;
     private final SupplierMapper supplierMapper;
-
-    public SupplierService(SupplierRepository supplierRepository, SupplierMapper supplierMapper, AddressRepository addressRepository) {
-        this.supplierRepository = supplierRepository;
-        this.supplierMapper = supplierMapper;
-        this.addressRepository = addressRepository;
-    }
 
     public SupplierResponseDto createSupplier(SupplierRequestDto supplierRequestDto) {
         Supplier supplier = supplierMapper.supplierRequestDtoToSupplier(supplierRequestDto);
@@ -42,7 +41,7 @@ public class SupplierService {
         return supplierMapper.supplierToSupplierResponseDto(savedSupplier);
     }
 
-    public SupplierResponseDto updateSupplierAddress(UUID id, UpdateAddressDTO updateAddressDTO) {
+    public SupplierResponseDto updateSupplierAddress(UUID id, AddressUpdateDTO updateAddressDTO) {
         Supplier supplier = supplierRepository.findById(id).orElseThrow(() -> new RuntimeException("Supplier not found with id: " + id));
         Address newAddress = addressRepository.findById(updateAddressDTO.getAddressId()).orElseThrow(() -> new RuntimeException("Address not found with id: " + updateAddressDTO.getAddressId()));
         supplier.setAddress(newAddress);
@@ -50,8 +49,19 @@ public class SupplierService {
         return supplierMapper.supplierToSupplierResponseDto(updatedSupplier);
     }
 
+//    public void deleteSupplier(UUID id) {
+//        Supplier supplier = supplierRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
+//        supplierRepository.delete(supplier);
+//    }
+
+    @Transactional
     public void deleteSupplier(UUID id) {
-        Supplier supplier = supplierRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
+        Supplier supplier = supplierRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + id));
+        List<Product> productsWithSupplier = productRepository.findAllBySupplierId(id);
+        if (!productsWithSupplier.isEmpty()) {
+            throw new RuntimeException("There is a product with this supplier!");
+        }
         supplierRepository.delete(supplier);
     }
 

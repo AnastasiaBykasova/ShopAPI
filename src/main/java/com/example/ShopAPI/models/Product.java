@@ -34,11 +34,11 @@ public class Product {
     @JoinColumn(name = "supplier_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Supplier supplier;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Image image;
     @Column(name = "supplier_id", nullable = false)
     private UUID supplierId;
-    @Column(name = "image_id")
-    private UUID imageId;
+//    @Column(name = "image_id")
+//    private UUID imageId;
 
 }

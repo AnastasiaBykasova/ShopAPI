@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/suppliers")
-@RequiredArgsConstructor // for ClientController constructor with 1 argument
+@RequiredArgsConstructor
 public class SupplierController {
     private final SupplierService supplierService;
 
@@ -24,7 +24,7 @@ public class SupplierController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<SupplierResponseDto> updateSupplierAddress(@PathVariable UUID id, @RequestBody UpdateAddressDTO updateAddressDTO) {
+    public ResponseEntity<SupplierResponseDto> updateSupplierAddress(@PathVariable UUID id, @RequestBody AddressUpdateDTO updateAddressDTO) {
         SupplierResponseDto updatedSupplier = supplierService.updateSupplierAddress(id, updateAddressDTO);
         return ResponseEntity.ok(updatedSupplier);
     }

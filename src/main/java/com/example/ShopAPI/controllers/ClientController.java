@@ -2,8 +2,9 @@ package com.example.ShopAPI.controllers;
 
 import com.example.ShopAPI.DTOs.ClientRequestDto;
 import com.example.ShopAPI.DTOs.ClientResponseDto;
-import com.example.ShopAPI.DTOs.UpdateAddressDTO;
+import com.example.ShopAPI.DTOs.AddressUpdateDTO;
 import com.example.ShopAPI.services.ClientService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/clients")
-//@RequiredArgsConstructor // for ClientController constructor with 1 argument
 public class ClientController {
     private final ClientService clientService;
 
@@ -50,10 +50,8 @@ public class ClientController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ClientResponseDto> updateClientAddress(@PathVariable UUID id, @RequestBody UpdateAddressDTO updateAddressDTO) {
+    public ResponseEntity<ClientResponseDto> updateClientAddress(@PathVariable UUID id, @RequestBody AddressUpdateDTO updateAddressDTO) {
         ClientResponseDto updatedClient = clientService.updateClientAddress(id, updateAddressDTO);
         return ResponseEntity.ok(updatedClient);
     }
 }
-
-
