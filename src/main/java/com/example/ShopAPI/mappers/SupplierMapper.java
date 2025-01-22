@@ -15,5 +15,5 @@ public interface SupplierMapper {
     @Mapping(source = "addressId", target = "address.id")
     Supplier supplierRequestDtoToSupplier(SupplierRequestDto supplierRequestDTO);
 
-//    List<ClientResponseDto> toDtoList(List<Client> clients);
+    List<SupplierResponseDto> toDtoList(List<Supplier> suppliers);
 }
