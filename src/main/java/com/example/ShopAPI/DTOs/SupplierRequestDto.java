@@ -8,15 +8,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
+@Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Schema(description = "DTO for supplier creation request")

@@ -20,7 +20,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
-@Tag(name = "Clients", description = "API/Endpoints for managing products")
+@Tag(name = "Products", description = "API/Endpoints for managing products")
 public class ProductController {
     private final ProductService productService;
 
@@ -32,7 +32,7 @@ public class ProductController {
                             content = @Content(schema = @Schema(implementation = ProductResponseDto.class))),
                     @ApiResponse(responseCode = "400", description = "Invalid input provided", content = @Content)
             })
-    public ResponseEntity<ProductResponseDto> createProduct(@Valid @RequestBody ProductRequestDto productRequestDto) {
+    public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductRequestDto productRequestDto) {
         ProductResponseDto createdProduct = productService.createProduct(productRequestDto);
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }

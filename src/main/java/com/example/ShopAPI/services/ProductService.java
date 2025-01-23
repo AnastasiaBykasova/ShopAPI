@@ -18,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,6 +58,8 @@ public class ProductService {
             throw new IllegalArgumentException("Cannot reduce stock by " + toReduce + ". Current stock is " + current);
         }
         product.setAvailableStock(current - toReduce);
+        LocalDate date = LocalDate.now();
+        product.setLastUpdateDate(date);
         Product updatedProduct = productRepository.save(product);
         return productMapper.productToProductResponseDto(updatedProduct);
     }

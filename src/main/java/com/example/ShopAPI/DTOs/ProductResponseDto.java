@@ -5,12 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @Schema(description = "DTO for rroduct creation response")
 public class ProductResponseDto {

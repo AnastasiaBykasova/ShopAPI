@@ -6,10 +6,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
+@Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Schema(description = "DTO for full address transporting")
