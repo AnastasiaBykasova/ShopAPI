@@ -22,13 +22,13 @@
 
 ### Нормализация БД
 1. Проектируем БД
-<br><img src="screenshots/db.png" width="700" alt="db">
+<br><img src="src/main/resources/static/screenshots/db.png" width="700" alt="db">
 <br>*Первоначальная БД*
 2. Проверяем на соответствие нормальным формам
-<br><img src="screenshots/normalization.png" width="700" alt="normalization">
+<br><img src="src/main/resources/static/screenshots/normalization.png" width="700" alt="normalization">
 <br>*Соответствие НФ*
 3. Реализуем БД в PostgreSQL
-<br><img src="screenshots/DBpostgresql.png" width="700" alt="DBpostgresql">
+<br><img src="src/main/resources/static/screenshots/DBpostgresql.png" width="700" alt="DBpostgresql">
 <br>*Схема базы данных*
 
 ## Этап 2: Определение моделей данных
@@ -117,5 +117,5 @@
 
 ## Результат
 - Swagger
-<br><img src="screenshots/swagger.png" width="700" alt="swagger">
+<br><img src="src/main/resources/static/screenshots/swagger.png" width="700" alt="swagger">
 <br>*Спроектированные API*
