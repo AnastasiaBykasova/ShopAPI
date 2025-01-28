@@ -1,3 +1,5 @@
+# Part 1. Backend: RESTful API
+
 ### Суть проекта
 - Реализация REST API, который позволит взаимодействовать с базой данных клиентов магазина бытовой техники. Этот API будет:
 1. Реализовывать основные CRUD операции (Create, Read, Update, Delete) для сущности "Клиент".
@@ -119,3 +121,19 @@
 - Swagger
 <br><img src="src/main/resources/static/screenshots/swagger.png" width="700" alt="swagger">
 <br>*Спроектированные API*
+
+# Part 2. Nginx configs
+- Ограничение прав для пользователя readonly_user.
+<br>![userReadonly](src/main/resources/static/screenshots/userReadonly.png)
+<br>*Ограничение прав в БД*
+
+- Проверяем статус веб-сервера Nginx.
+<br>![checkNginx](src/main/resources/static/screenshots/checkNginx.png)
+<br>*Сервер активен*
+
+- Узнаем публичный IP-адрес сервера с помощью команды `curl ifconfig.me`.
+- Узнаем локальный IP-адрес сервера 
+- Создаем символическую ссылку с помощью команды `sudo ln -s /etc/nginx/sites-available/ShopAPI /etc/nginx/sites-enabled/`.
+- Проверяем конфигурацию Nginx на наличие ошибок с помощью команды `sudo nginx -t`.
+- Перезапускаем Nginx с помощью команды `sudo systemctl restart nginx`.
+- 
