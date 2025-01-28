@@ -123,6 +123,8 @@
 <br>*Спроектированные API*
 
 # Part 2. Nginx configs
+
+## Настройка обратного проксирования
 - Ограничение прав для пользователя readonly_user.
 <br>![userReadonly](src/main/resources/static/screenshots/userReadonly.png)
 <br>*Ограничение прав в БД*
@@ -132,8 +134,26 @@
 <br>*Сервер активен*
 
 - Узнаем публичный IP-адрес сервера с помощью команды `curl ifconfig.me`.
-- Узнаем локальный IP-адрес сервера 
+- Узнаем локальный IP-адрес сервера.
+- Настраиваем конфигурацию Nginx для приложения.
+<br>![nginxForApp](src/main/resources/static/screenshots/nginxForApp.png)
+<br>*Настройка конфигурации*
 - Создаем символическую ссылку с помощью команды `sudo ln -s /etc/nginx/sites-available/ShopAPI /etc/nginx/sites-enabled/`.
 - Проверяем конфигурацию Nginx на наличие ошибок с помощью команды `sudo nginx -t`.
 - Перезапускаем Nginx с помощью команды `sudo systemctl restart nginx`.
+
+## Настройка Nginx для работы веб-приложения в части маршрутизации
+### Настройка маршрутизации `/api` -> на `/api/v1` разработанной в блоке 2 API. По пути `/api/v1` выдаём Swagger.
+- `@Configuration`: указывает, что это класс конфигурации. 
+- `WebMvcConfigurer`: интерфейс для настройки Spring Web MVC.
+- `addViewControllers(ViewControllerRegistry registry)`: метод для добавления контроллеров отображения.
+- `registry.addRedirectViewController("/api", "/api/v1")`: перенаправляет запросы с пути `/api` на путь `/api/v1`.
+- `registry.addRedirectViewController("/api/", "/api/v1")`: перенаправляет запросы с пути `/api/` на путь `/api/v1`, чтобы обработать запросы, где есть завершающий `/`.
+- `addResourceHandlers(ResourceHandlerRegistry registry)`: метод для настройки статических ресурсов.
+- `registry.addResourceHandler("/swagger-ui/")`: устанавливаем путь для статики swagger.
+- `addResourceLocations("classpath:/META-INF/resources/webjars/swagger-ui/")`: показываем где лежат статические ресурсы.
+- `.setCachePeriod(0)`: отключаем кеширование, чтобы можно было разрабатывать.
+
+## Настройка раздачи статики по пути `/`. В корне раздачи статики помести 2 файла: index.html и image.png.
+- Добавляем index.html и image.png в директорию `src/main/resources/static`.
 - 

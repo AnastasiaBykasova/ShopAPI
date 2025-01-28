@@ -34,8 +34,6 @@ build/
 
 # MyPersonal
 /src/main/resources/application.properties
-<<<<<<< HEAD
 .gigaide/
-=======
-.gigaide/
->>>>>>> develop
+/src/main/resources/static/1.jpg
+/src/main/resources/static/2.jpg
